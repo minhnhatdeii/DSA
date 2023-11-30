@@ -6,7 +6,7 @@
 using namespace std;
 
 struct Edge {
-    int src, dest, weight;
+    int st, en, weight;
 };
 
 class Graph {
@@ -16,8 +16,8 @@ public:
 
     Graph(int V, int E) : V(V), E(E) {}
 
-    void addEdge(int src, int dest, int weight) {
-        Edge edge = {src, dest, weight};
+    void addEdge(int st, int en, int weight) {
+        Edge edge = {st, en, weight};
         edges.push_back(edge);
     }
 
@@ -27,8 +27,8 @@ public:
 
         for (int i = 1; i <= V - 1; ++i) {
             for (const auto& edge : edges) {
-                int u = edge.src;
-                int v = edge.dest;
+                int u = edge.st;
+                int v = edge.en;
                 int weight = edge.weight;
 
                 if (pi[u] != INT_MAX && pi[u] + weight < pi[v]) {
@@ -38,25 +38,25 @@ public:
         }
     }
 
-    void reweightGraph(vector<int>& pi) {
+    void reweight(vector<int>& pi) {
         for (auto& edge : edges) {
-            edge.weight = edge.weight + pi[edge.src] - pi[edge.dest];
+            edge.weight = edge.weight + pi[edge.st] - pi[edge.en];
         }
     }
 
-    void dijkstra(int src) {
+    void dijkstra(int st) {
         vector<int> dist(V, INT_MAX);
-        dist[src] = 0;
+        dist[st] = 0;
 
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
-        pq.push({0, src});
+        pq.push({0, st});
 
         while (!pq.empty()) {
             int u = pq.top().second;
             pq.pop();
 
             for (const auto& edge : edges) {
-                int v = edge.dest;
+                int v = edge.en;
                 int weight = edge.weight;
 
                 if (dist[v] > dist[u] + weight) {
@@ -86,7 +86,7 @@ int main() {
     vector<int> pi;
     graph.bellmanFord(pi);
 
-    graph.reweightGraph(pi);
+    graph.reweight(pi);
 
     graph.dijkstra(0);
 

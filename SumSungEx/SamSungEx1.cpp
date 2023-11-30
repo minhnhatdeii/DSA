@@ -1,12 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
+
+set<int> adj[1005];
+int lev[1005];
 int n, m;
-set<int> adj[1001];
-int degree[1001];
 
 void euler(int v) {
     stack<int> st;
-    vector<int> EC;
+    vector<int> myvec;
     st.push(v);
     while (!st.empty()) {
         int x = st.top();
@@ -17,23 +18,24 @@ void euler(int v) {
             adj[y].erase(x);
         } else {
             st.pop();
-            EC.push_back(x);
+            myvec.push_back(x);
         }
     }
-    reverse(begin(EC), end(EC));
-    for (int x : EC) {
+    reverse(begin(myvec), end(myvec));
+    for (int x : myvec) {
         cout << x << " ";
     }
 }
-bool hasEqualInAndOutDegree() {
+bool equal() {
     for (int i = 1; i <= n; i++) {
-        if (degree[i] % 2 != 0) {
+        if (lev[i] % 2 != 0) {
             return false;
         }
     }
     return true;
 }
-bool isConnected() {
+
+bool conect() {
     vector<bool> visited(n + 1, false);
     queue<int> q;
     q.push(1);
@@ -55,28 +57,31 @@ bool isConnected() {
     }
     return true;
 }
-bool hasEulerCycle() {
-    if (!isConnected() || !hasEqualInAndOutDegree()) {
+
+bool eulercycle() {
+    if (!conect() || !equal()) {
         return false;
     }
     return true;
 }
-bool isHamiltonCircuit(int m) {
-    if (!isConnected()) {
+
+bool hamilton(int m) {
+    if (!conect()) {
         return false;
     }
 
-    int degreeHamil[m];
+    int levHamil[m];
     for (int i = 0; i < m; i++) {
-        degreeHamil[i] = adj[i].size();
+        levHamil[i] = adj[i].size();
     }
     for (int i = 0; i < m; i++) {
-        if (degreeHamil[i] < m / 2) {
+        if (levHamil[i] < m / 2) {
             return false;
         }
     }
     return true;
 }
+
 int main() {
     cin >> n >> m;
     for (int i = 0; i < m; i++) {
@@ -84,16 +89,16 @@ int main() {
         cin >> x >> y;
         adj[x].insert(y);
         adj[y].insert(x);
-        degree[x]++;
-        degree[y]++;
+        lev[x]++;
+        lev[y]++;
     }
-    if (hasEulerCycle()) {
+    if (eulercycle()) {
         euler(1);
     } else {
         cout << "Khong co chu trinh Euler";
     }
     cout << endl;
-    if(isHamiltonCircuit(n)) {
+    if(hamilton(n)) {
         cout << "Co chu trinh Hamilton";
     } else {
         cout << "Khong co chu trinh Hamilton";

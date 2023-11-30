@@ -6,9 +6,9 @@ using namespace std;
 
 class Graph {
 private:
-    int V; // Số đỉnh
-    int E; // Số cạnh
-    vector<vector<int>> edges; // Lưu trữ các cạnh của đồ thị
+    int V;
+    int E;
+    vector<vector<int>> edges;
 
 public:
     Graph(int v, int e) : V(v), E(e) {
@@ -41,7 +41,7 @@ public:
         }
     }
 
-    vector<vector<int>> vyssotskyMST() {
+    vector<vector<int>> vyssotsky() {
         vector<vector<int>> result;
         int i = 0, e = 0;
 
@@ -86,7 +86,7 @@ int main() {
         cin >> u >> v >> w;
         graph.addEdge(i, u, v, w);
     }
-    vector<vector<int>> mstResult = graph.vyssotskyMST();
+    vector<vector<int>> mstResult = graph.vyssotsky();
 
     for (const vector<int>& edge : mstResult) {
         cout << edge[0] << edge[1] << edge[2] << endl;

@@ -14,7 +14,7 @@ void dfs(int v, vector<vector<int>> &graph, vector<bool> &visited, stack<int> &s
     stack1.push(v);
 }
 
-void topoSort(vector<vector<int>> &graph, vector<int> &result) {
+void topoSort(vector<vector<int>> &graph, vector<int> &res) {
     int v = graph.size() - 1;
     vector<bool> visited(v + 1, false);
     stack<int> mystack;
@@ -29,7 +29,7 @@ void topoSort(vector<vector<int>> &graph, vector<int> &result) {
     while (!mystack.empty()) {
         int vertex = mystack.top();
         mystack.pop();
-        result[vertex] = topo++;
+        res[vertex] = topo++;
     }
 }
 
@@ -38,7 +38,7 @@ int main() {
     cin >> numVertices >> numEdge;
 
     vector<vector<int>> graph(numVertices + 1);
-    vector<int> result(numVertices + 1, 0);
+    vector<int> res(numVertices + 1, 0);
 
     for (int i = 0; i < numEdge; i++) {
         int u, v;
@@ -46,10 +46,10 @@ int main() {
         graph[u].push_back(v);
     }
 
-    topoSort(graph, result);
+    topoSort(graph, res);
 
     for (int i = 1; i <= numVertices; i++) {
-        cout << result[i] << " ";
+        cout << res[i] << " ";
     }
 
     return 0;

@@ -20,7 +20,7 @@ public:
         edges.push_back(edge);
     }
 
-    void primMST() {
+    void prim() {
         vector<int> key(V, INT_MAX);
         vector<int> parent(V, -1);
         vector<bool> inMST(V, false);
@@ -44,12 +44,12 @@ public:
         }
     }
 
-    void kruskalMST() {
+    void kruskal() {
         sort(edges.begin(), edges.end(), [](Edge a, Edge b) {
             return a.weight < b.weight;
         });
 
-        vector<int> parent(V, -1); // Dùng để kiểm tra chu trình
+        vector<int> parent(V, -1);
 
 
         for (Edge edge : edges) {
@@ -102,9 +102,9 @@ int main() {
         cin >> u >> v >> w;
         g.addEdge(u, v, w);
     }
-    g.primMST();
+    g.prim();
 
-    g.kruskalMST();
+    g.kruskal();
 
     return 0;
 }

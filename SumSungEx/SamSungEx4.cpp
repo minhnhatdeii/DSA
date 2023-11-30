@@ -1,4 +1,3 @@
-//Kiem tra do thi 2 mau.
 
 #include <iostream>
 #include <queue>
@@ -12,17 +11,17 @@ vector<int> adj[NumMax];
 int color[NumMax];
 
 bool bfs(int u) {
-    queue<int> q;
-    q.push(u);
+    queue<int> myqueue;
+    myqueue.push(u);
     color[u] = 0;
-    while (!q.empty()) {
-        int v = q.front();
-        q.pop();
-        for (int neighbor: adj[v]) {
-            if (color[neighbor] == -1) {
-                color[neighbor] = 1 - color[v];
-                q.push(neighbor);
-            } else if (color[neighbor] == color[v]) {
+    while (!myqueue.empty()) {
+        int v = myqueue.front();
+        myqueue.pop();
+        for (int next: adj[v]) {
+            if (color[next] == -1) {
+                color[next] = 1 - color[v];
+                myqueue.push(next);
+            } else if (color[next] == color[v]) {
                 return false;
             }
         }

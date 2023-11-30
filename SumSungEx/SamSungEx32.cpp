@@ -20,7 +20,7 @@ public:
         distance[u][v] = distance[v][u] = w;
     }
 
-    void preprocessGraph() {
+    void process() {
         for (int k = 0; k < V; k++) {
             for (int i = 0; i < V; i++) {
                 for (int j = 0; j < V; j++) {
@@ -33,7 +33,7 @@ public:
         }
     }
 
-    int getShortestDistance(int u, int v) {
+    int getMinDis(int u, int v) {
         return distance[u][v];
     }
 };
@@ -47,10 +47,10 @@ int main() {
         cin >> u >> v >> w;
         graph.addEdge(u, v, w);
     }
-    graph.preprocessGraph();
+    graph.process();
 
     int u = 0, v = 2;
-    int shortestDistance = graph.getShortestDistance(u, v);
+    int shortestDistance = graph.getMinDis(u, v);
 
     if (shortestDistance != INF) {
         cout << "khoảng cách ngắn nhất giứa" << u << " và " << v << " là: " << shortestDistance << endl;

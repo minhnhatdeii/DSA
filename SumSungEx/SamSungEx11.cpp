@@ -4,23 +4,23 @@
 
 using namespace std;
 
-void topologicalSort(vector<vector<int>> &graph, vector<int> &order, vector<bool> &visited, int node) {
+void topoSort(vector<vector<int>> &graph, vector<int> &order, vector<bool> &visited, int node) {
     visited[node] = true;
     for (int neighbor : graph[node]) {
         if (!visited[neighbor]) {
-            topologicalSort(graph, order, visited, neighbor);
+            topoSort(graph, order, visited, neighbor);
         }
     }
     order.push_back(node);
 }
 
-bool isHamiltonianPath(vector<vector<int>> &graph) {
+bool check(vector<vector<int>> &graph) {
     vector<int> order;
     vector<bool> visited(graph.size(), false);
 
     for (int i = 0; i < graph.size(); i++) {
         if (!visited[i]) {
-            topologicalSort(graph, order, visited, i);
+            topoSort(graph, order, visited, i);
         }
     }
 
@@ -58,7 +58,7 @@ int main() {
         graph[u].push_back(v);
     }
 
-    if (isHamiltonianPath(graph)) {
+    if (check(graph)) {
         cout << "YES" << endl;
     } else {
         cout << "NO" << endl;

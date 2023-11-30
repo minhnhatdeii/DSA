@@ -1,26 +1,26 @@
 #include <bits/stdc++.h>
 using namespace std;
 int n, m;
-set<int> adj[1001];
-int degree[1001];
+set<int> adj[1005];
+int lev[1005];
 
 void euler(int v) {
-    stack<int> st;
-    vector<int> EC;
-    st.push(v);
-    while (!st.empty()) {
-        int x = st.top();
+    stack<int> myStack;
+    vector<int> myvec;
+    myStack.push(v);
+    while (!myStack.empty()) {
+        int x = myStack.top();
         if (adj[x].size() != 0) {
             int y = *adj[x].begin();
-            st.push(y);
+            myStack.push(y);
             adj[x].erase(y);
         } else {
-            st.pop();
-            EC.push_back(x);
+            myStack.pop();
+            myvec.push_back(x);
         }
     }
-    reverse(begin(EC), end(EC));
-    for (int x : EC) {
+    reverse(begin(myvec), end(myvec));
+    for (int x : myvec) {
         cout << x << " ";
     }
 }
@@ -31,8 +31,8 @@ int main() {
         int x, y;
         cin >> x >> y;
         adj[x].insert(y);
-        degree[x]++;
-        degree[y]++;
+        lev[x]++;
+        lev[y]++;
     }
 
     euler(1);

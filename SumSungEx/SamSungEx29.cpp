@@ -48,7 +48,7 @@ public:
  		}
 
  		for (int i = 0; i < V; i++) {
-            cout << "Distance from " << start << " to " << i << " is " << dist[i] << " : ";
+            cout << start << i  << dist[i];
             stack<int> s;
             int j = i;
             while (j != start) {
@@ -75,7 +75,6 @@ int main() {
         g.addEdge(u, v, w);
     }
     int start = 0;
-    cout << "Dijkstra:" << endl;
     g.dijkstra(start);
 
 }

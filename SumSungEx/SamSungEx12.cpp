@@ -13,7 +13,7 @@ void topoSort(vector<vector<int>> &graph, vector<int> &order, vector<bool> &visi
     order.push_back(node);
 }
 
-bool isUniqueTopo(vector<vector<int>> &graph) {
+bool unique(vector<vector<int>> &graph) {
     vector<int> myVec;
     vector<bool> visited(graph.size(), false);
     for (int i = 0; i < graph.size(); i++) {
@@ -50,7 +50,7 @@ int main() {
         cin >> u >> v;
         graph[u].push_back(v);
     }
-    bool result = isUniqueTopo(graph);
+    bool result = unique(graph);
     if (result) {
         cout << "đồ thị có một thứ tự topo duy nhất !\n";
     } else {

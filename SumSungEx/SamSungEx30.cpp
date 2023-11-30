@@ -3,7 +3,6 @@
 #include <stack>
 #include <limits>
 #include <algorithm>
-
 using namespace std;
 
 class Graph {
@@ -17,13 +16,13 @@ public:
         adj[u].push_back({v, w});
     }
 
-    void longestPath(int src) {
+    void maxPath(int src) {
         stack<int> s;
         vector<bool> visited(V, false);
 
         for (int i = 0; i < V; ++i) {
             if (!visited[i]) {
-                topologicalSortUtil(i, visited, s);
+                topoSortUtil(i, visited, s);
             }
         }
 
@@ -58,13 +57,13 @@ public:
     }
 
 private:
-    void topologicalSortUtil(int v, vector<bool>& visited, stack<int>& s) {
+    void topoSortUtil(int v, vector<bool>& visited, stack<int>& s) {
         visited[v] = true;
 
         for (const auto& neighbor : adj[v]) {
             int u = neighbor.first;
             if (!visited[u]) {
-                topologicalSortUtil(u, visited, s);
+                topoSortUtil(u, visited, s);
             }
         }
 
@@ -84,7 +83,7 @@ int main() {
 
     int src = 1;
     cout << "đường đi dài nhất từ 1 là: \n";
-    g.longestPath(src);
+    g.maxPath(src);
 
     return 0;
 }

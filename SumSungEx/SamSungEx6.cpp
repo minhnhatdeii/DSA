@@ -4,7 +4,7 @@
 using namespace std;
 vector<int> adj[1000];
 bool is_edge_connected = true;
-void DFS(int u, vector<bool>& visited, vector<int>& disc, vector<int>& low, vector<int>& parent, vector<int> adj[]) {
+void dfs(int u, vector<bool>& visited, vector<int>& disc, vector<int>& low, vector<int>& parent, vector<int> adj[]) {
     static int time = 0;
     int children = 0;
 
@@ -15,7 +15,7 @@ void DFS(int u, vector<bool>& visited, vector<int>& disc, vector<int>& low, vect
         if (!visited[v]) {
             children++;
             parent[v] = u;
-            DFS(v, visited, disc, low, parent, adj);
+            dfs(v, visited, disc, low, parent, adj);
 
             low[u] = min(low[u], low[v]);
 
@@ -29,15 +29,15 @@ void DFS(int u, vector<bool>& visited, vector<int>& disc, vector<int>& low, vect
     }
 }
 
-void CheckEdgeConnected(int vertices) {
-    vector<bool> visited(vertices, false);
-    vector<int> disc(vertices, 0);
-    vector<int> low(vertices, 0);
-    vector<int> parent(vertices, -1);
+void check(int v) {
+    vector<bool> visited(v, false);
+    vector<int> disc(v, 0);
+    vector<int> low(v, 0);
+    vector<int> parent(v, -1);
 
-    for (int i = 0; i < vertices; i++) {
+    for (int i = 0; i < v; i++) {
         if (!visited[i]) {
-            DFS(i, visited, disc, low, parent, adj);
+            dfs(i, visited, disc, low, parent, adj);
         }
     }
 }
@@ -45,13 +45,13 @@ void CheckEdgeConnected(int vertices) {
 int main() {
     int n,m;
     cin >> n >> m;
-    for(int i=0; i<m; i++) {
+    for(int i=0;i<m;i++) {
         int u,v;
         cin >> u >> v;
         adj[u].push_back(v);
         adj[v].push_back(u);
     }
-    CheckEdgeConnected(n);
+    check(n);
     if (is_edge_connected) {
         cout << "đồ thị có liên thông cạnh!" << endl;
     } else {

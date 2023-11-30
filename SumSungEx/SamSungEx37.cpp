@@ -4,16 +4,16 @@
 
 using namespace std;
 
-void printPath(vector<int> &parent, int v) {
+void print(vector<int> &parent, int v) {
     if (parent[v] == -1) {
         cout << v;
         return;
     }
-    printPath(parent, parent[v]);
+    print(parent, parent[v]);
     cout << " " << v;
 }
 
-void shortestPath(vector<vector<pair<int, int>>> &graph, int source, int C) {
+void minPath(vector<vector<pair<int, int>>> &graph, int source, int C) {
     vector<int> distance(graph.size(), INT_MAX);
     vector<int> parent(graph.size(), -1);
     vector<vector<int>> bucket(C + 1);
@@ -41,7 +41,7 @@ void shortestPath(vector<vector<pair<int, int>>> &graph, int source, int C) {
     }
     for (int i = 0; i < graph.size(); i++) {
         if (i != source) {
-            printPath(parent, i);
+            print(parent, i);
             cout << "\n";
         }
     }
@@ -65,7 +65,7 @@ int main() {
 
     cin >> C;
 
-    shortestPath(graph, source, C);
+    minPath(graph, source, C);
 
     return 0;
 }

@@ -58,12 +58,12 @@ public:
         }
     }
 
-    void printPath(vector<int>& parent, int v) {
+    void print(vector<int>& parent, int v) {
         if (parent[v] == -1) {
             cout << v << " ";
             return;
         }
-        printPath(parent, parent[v]);
+        print(parent, parent[v]);
         cout << v << " ";
     }
 };
@@ -78,23 +78,23 @@ int main() {
         graph.addEdge(u, v, w);
     }
 
-    vector<int> increasingDist, increasingParent, decreasingDist, decreasingParent;
+    vector<int> incD, incP, decD, decP;
 
-    graph.dijkstra(0, increasingDist, increasingParent, true);
-    graph.dijkstra(0, decreasingDist, decreasingParent, false);
+    graph.dijkstra(0, incD, incP, true);
+    graph.dijkstra(0, decD, decP, false);
 
     cout << "Đường đi ngắn nhất tăng dần từ 0 tới các đỉnh là: " << endl;
     for (int i = 0; i < numVertices; ++i) {
         cout << "đường đi từ: " << i << ": ";
-        graph.printPath(increasingParent, i);
-        cout << "Khoảng cách là : " << increasingDist[i] << endl;
+        graph.print(incP, i);
+        cout << "Khoảng cách là : " << incD[i] << endl;
     }
 
     cout << "Đường đi ngắn nhất giảm dần từ 0 tới các đỉnh là: " << endl;
     for (int i = 0; i < numVertices; ++i) {
         cout << "đường đi từ: " << i << ": ";
-        graph.printPath(decreasingParent, i);
-        cout << "Khoảng cách là : " << decreasingDist[i] << endl;
+        graph.print(decP, i);
+        cout << "Khoảng cách là : " << decD[i] << endl;
     }
 
     return 0;

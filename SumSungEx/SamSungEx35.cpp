@@ -46,7 +46,7 @@ vector<int> dijkstra(const vector<vector<Edge>>& graph, int start) {
     return dist;
 }
 
-vector<int> bitonicShortestPath(const vector<vector<Edge>>& graph, int start) {
+vector<int> bitonic(const vector<vector<Edge>>& graph, int start) {
     int n = graph.size();
     vector<int> increasingDist = dijkstra(graph, start);
 
@@ -86,7 +86,7 @@ int main() {
         graph[u].emplace_back(v, w);
     }
 
-    vector<int> result = bitonicShortestPath(graph, s);
+    vector<int> result = bitonic(graph, s);
 
     for (int i = 0; i < n; ++i) {
         if (result[i] == INF) {

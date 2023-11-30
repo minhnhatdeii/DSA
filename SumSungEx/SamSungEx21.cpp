@@ -14,6 +14,4 @@
           i. Thêm cạnh e vào C.
           ii. Nếu số lượng cạnh trong C bằng V' - 1, thoát khỏi vòng lặp.
 7. Output: Cây bao trùm C, chứa tất cả các cạnh của S và một số cạnh khác từ G.
-
-
  */

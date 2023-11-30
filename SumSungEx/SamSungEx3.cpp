@@ -7,17 +7,17 @@
 
 using namespace std;
 
-int countParallelEdges(const vector<pair<int, int>> &edges, int m) {
-    int cnt = 0;
-    unordered_set<int> visitedV;
+int count(const vector<pair<int, int>> &edges, int m) {
+    int dem = 0;
+    unordered_set<int> visV;
 
     for (const auto &edge: edges) {
         int hash = edge.first * (m + 1) + edge.second;
-        if (!visitedV.insert(hash).second) {
-            cnt++;
+        if (!visV.insert(hash).second) {
+            dem++;
         }
     }
-    return cnt;
+    return dem;
 }
 
 int main() {
@@ -30,7 +30,7 @@ int main() {
         cin >> u >> v;
         edges.emplace_back(u, v);
     }
-    int parallelEdges = countParallelEdges(edges, numVertical);
-    cout << parallelEdges << endl;
+    int res = count(edges, numVertical);
+    cout << res << endl;
     return 0;
 }

@@ -8,7 +8,7 @@ struct Edge {
     int src, dest, weight;
 };
 
-struct Subset {
+struct level {
     int parent, rank;
 };
 
@@ -20,8 +20,8 @@ private:
 public:
     Graph(int vertices, int edges);
     void addEdge(int src, int dest, int weight);
-    int find(Subset subsets[], int i);
-    void Union(Subset subsets[], int x, int y);
+    int find(level levels[], int i);
+    void Union(level levels[], int x, int y);
     void boruvkaMST();
 };
 
@@ -35,34 +35,34 @@ void Graph::addEdge(int src, int dest, int weight) {
     edges.push_back(edge);
 }
 
-int Graph::find(Subset subsets[], int i) {
-    if (subsets[i].parent != i)
-        subsets[i].parent = find(subsets, subsets[i].parent);
+int Graph::find(level levels[], int i) {
+    if (levels[i].parent != i)
+        levels[i].parent = find(levels, levels[i].parent);
 
-    return subsets[i].parent;
+    return levels[i].parent;
 }
 
-void Graph::Union(Subset subsets[], int x, int y) {
-    int xroot = find(subsets, x);
-    int yroot = find(subsets, y);
+void Graph::Union(level levels[], int x, int y) {
+    int xroot = find(levels, x);
+    int yroot = find(levels, y);
 
-    if (subsets[xroot].rank < subsets[yroot].rank)
-        subsets[xroot].parent = yroot;
-    else if (subsets[xroot].rank > subsets[yroot].rank)
-        subsets[yroot].parent = xroot;
+    if (levels[xroot].rank < levels[yroot].rank)
+        levels[xroot].parent = yroot;
+    else if (levels[xroot].rank > levels[yroot].rank)
+        levels[yroot].parent = xroot;
     else {
-        subsets[yroot].parent = xroot;
-        subsets[xroot].rank++;
+        levels[yroot].parent = xroot;
+        levels[xroot].rank++;
     }
 }
 
-void Graph::boruvkaMST() {
-    Subset* subsets = new Subset[V];
+void Graph::boruvka() {
+    level* levels = new level[V];
     vector<Edge> result;
 
     for (int v = 0; v < V; v++) {
-        subsets[v].parent = v;
-        subsets[v].rank = 0;
+        levels[v].parent = v;
+        levels[v].rank = 0;
     }
 
     int numTrees = V;
@@ -71,8 +71,8 @@ void Graph::boruvkaMST() {
         vector<int> cheapest(V, -1);
 
         for (int i = 0; i < E; i++) {
-            int set1 = find(subsets, edges[i].src);
-            int set2 = find(subsets, edges[i].dest);
+            int set1 = find(levels, edges[i].src);
+            int set2 = find(levels, edges[i].dest);
 
             if (set1 != set2) {
                 if (cheapest[set1] == -1 || edges[cheapest[set1]].weight > edges[i].weight)
@@ -85,12 +85,12 @@ void Graph::boruvkaMST() {
 
         for (int i = 0; i < V; i++) {
             if (cheapest[i] != -1) {
-                int set1 = find(subsets, edges[cheapest[i]].src);
-                int set2 = find(subsets, edges[cheapest[i]].dest);
+                int set1 = find(levels, edges[cheapest[i]].src);
+                int set2 = find(levels, edges[cheapest[i]].dest);
 
                 if (set1 != set2) {
                     result.push_back(edges[cheapest[i]]);
-                    Union(subsets, set1, set2);
+                    Union(levels, set1, set2);
                     numTrees--;
                 }
             }
@@ -101,7 +101,7 @@ void Graph::boruvkaMST() {
         cout << edge.src << edge.dest << edge.weight << endl;
     }
 
-    delete[] subsets;
+    delete[] levels;
 }
 
 int main() {
@@ -116,7 +116,7 @@ int main() {
         graph.addEdge(u, v, w);
     }
 
-    graph.boruvkaMST();
+    graph.boruvka();
 
     return 0;
 }

@@ -4,7 +4,7 @@
 
 using namespace std;
 
-vector<int> topologicalSort(int numVertices, vector<vector<int>>& adjacencyList) {
+vector<int> topoSort(int numVertices, vector<vector<int>>& adjacencyList) {
     vector<int> indegree(numVertices, 0);
     queue<int> q;
     vector<int> result;
@@ -52,11 +52,11 @@ int main() {
         adjList[u].push_back(v);
     }
 
-    vector<int> sortedVertices = topologicalSort(numVertices, adjList);
+    vector<int> tmp = topoSort(numVertices, adjList);
 
 
-    for (int vertex : sortedVertices) {
-        cout << vertex << " ";
+    for (int i : tmp) {
+        cout << i << " ";
     }
     cout << endl;
 

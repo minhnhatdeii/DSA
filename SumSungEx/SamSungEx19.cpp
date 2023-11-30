@@ -23,9 +23,9 @@ public:
     void addEdge(int src, int dest, int weight);
     int find(int i);
     void Union(int x, int y);
-    void kruskalMST();
+    void kruskal();
     void dfs(int u, vector<bool>& visited, vector<vector<int>>& adjList);
-    void findCriticalEdges();
+    void findEdge();
 };
 
 Graph::Graph(int vertices, int edges) {
@@ -60,7 +60,7 @@ void Graph::Union(int x, int y) {
     }
 }
 
-void Graph::kruskalMST() {
+void Graph::kruskal() {
     vector<Edge> result;
 
     for (int v = 0; v < V; v++) {
@@ -86,7 +86,6 @@ void Graph::kruskalMST() {
         }
     }
 
-    cout << "Minimum Spanning Tree:\n";
     for (Edge edge : result) {
         cout << edge.src << " - " << edge.dest << " : " << edge.weight << endl;
     }
@@ -102,7 +101,7 @@ void Graph::dfs(int u, vector<bool>& visited, vector<vector<int>>& adjList) {
     }
 }
 
-void Graph::findCriticalEdges() {
+void Graph::findEdge() {
     sort(edges.begin(), edges.end(), [](Edge a, Edge b) {
         return a.weight < b.weight;
     });
@@ -125,7 +124,6 @@ void Graph::findCriticalEdges() {
         adjList[edge.dest].push_back(edge.src);
     }
 
-    cout << "Critical Edges:\n";
     for (int i = 0; i < E; i++) {
         if (i == lastEdgeIndex[i]) {
 
@@ -139,6 +137,7 @@ void Graph::findCriticalEdges() {
     }
 }
 
+
 int main() {
     int numVertices, numEdge;
     cin >> numVertices >> numEdge;
@@ -151,8 +150,8 @@ int main() {
         graph.addEdge(u, v, w);
     }
 
-    graph.kruskalMST();
-    graph.findCriticalEdges();
+    graph.kruskal();
+    graph.findEdge();
 
     return 0;
 }
